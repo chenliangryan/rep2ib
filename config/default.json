@@ -1,0 +1,67 @@
+{
+    "type": "Postgres",
+    "version": "*",
+    "database": {
+        "host": "192.168.65.131",
+        "port": 5432,
+        "database": "mmx",
+        "user": "postgres",
+        "password": "P0stgr3s",
+        "use_ssh": false
+    },
+    "schemas": [],
+    "tables": [
+        {
+            "seq": 110,
+            "namespace": "public",
+            "name": "app_activity",
+            "batch_size": 5000,
+            "columns": "id, account_id, account_ip, event_module, event_op, entry_type, related_connection_id, created_dt",
+            "cursor": {
+                "field": "xid",
+                "operator": ">",
+                "value": 2275
+            },
+            "filter_exp": "",
+            "target": {
+                "namespace": "staging",
+                "name": "app_activity",
+                "access_mode": "overwrite"
+            }
+        },
+        {
+            "namespace": "public",
+            "name": "app_asset_group",
+            "target": {
+                "namespace": "staging"
+            }
+        },
+        {
+            "namespace": "public",
+            "name": "app_account",
+            "batch_size": 5000,
+            "columns": "*",
+            "filter_exp": "last_signin_dt is not null",
+            "target": {
+                "namespace": "staging",
+                "name": "app_account",
+                "access_mode": "overwrite"
+            }
+        },
+        {
+            "namespace": "public",
+            "name": "app_event_log",
+            "columns": "*",
+            "filter_exp": "related_target_id  = '61' and related_target_id = '61'",
+            "cursor": {
+                "field": "xid",
+                "operator": ">",
+                "value": 2288
+            },
+            "target": {
+                "namespace": "staging",
+                "access_mode": "overwrite"
+            }
+        }
+    ]
+}

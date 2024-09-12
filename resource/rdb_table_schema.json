@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "properties": {
+    "seq": {"type": "integer"},
+    "namespace": {"type": "string", "minLength": 1},
+    "name": {"type": "string", "minLength": 1},
+    "batch_size": {"type": "integer"},
+    "columns": {"type": "string", "minLength": 1},
+    "cursor": {
+      "type": "object",
+      "properties": {
+        "field": {"type": "string", "minLength": 1},
+        "operator": {"type": "string", "minLength": 1},
+        "value": {"anyOf": [
+          {"type": "integer"},
+          {"type": "string", "minLength": 1}
+        ]}
+      },
+      "required": ["field", "operator", "value"]
+    },
+    "filter_exp": {"type": "string"},
+    "target": {
+      "type": "object",
+      "properties": {
+        "namespace": {"type": "string", "minLength": 1},
+        "name": {"type": "string", "minLength": 1},
+        "write_mode": {"type": "string", "enum": ["append", "overwrite"]}
+      },
+      "required": ["namespace"]
+    }
+  },
+  "required": ["namespace", "name", "target"]
+}
